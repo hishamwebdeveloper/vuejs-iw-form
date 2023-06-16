@@ -456,7 +456,8 @@ initFormData();
         </template>
 
         <template name="checkbox"
-                  v-else-if='IwFormTypeEnum.CHECKBOX === (item.type)'>
+                  v-else-if='IwFormTypeEnum.CHECKBOX === (item.type) 
+                    && isVisible(item.isVisible)'>
           <input :id="`${formId}-${item.name}`"
                  type="checkbox"
                  v-model="myFormData[item.name]"
