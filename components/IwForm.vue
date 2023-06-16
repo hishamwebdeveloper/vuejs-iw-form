@@ -237,6 +237,18 @@ function isDisabled(disabled: boolean | undefined, isReadOnly: boolean) {
   return disabled || isReadOnly
 }
 
+function isVisible(isVisible: boolean | Function | undefined) {
+  if (typeof isVisible == 'boolean') {
+    return isVisible;
+  }
+
+  if (typeof isVisible == 'function') {
+    return isVisible();
+  }
+
+  return true
+}
+
 function getCssWrapper(cssParam: Function | string | undefined, isReadOnly: boolean = false) {
   let readOnlyCSS = isReadOnly ? ' iwFormReadOnly ' : '';
   if (typeof cssParam === 'function') return readOnlyCSS + cssParam();
@@ -388,7 +400,8 @@ initFormData();
         </template>
 
         <template name="text-group"
-                  v-else-if='IwFormTypeTextGroup.indexOf(item.type) >= 0'>
+                  v-else-if='IwFormTypeTextGroup.indexOf(item.type) >= 0 
+                    && isVisible(item.isVisible)'>
           <label :for="`${formId}-${item.name}`"
                  class="iwFormInputLabel">{{ setLabel(item) }}</label>
           <div class="mb-2 relative">
